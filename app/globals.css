@@ -1,26 +1,117 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Default: Light Mode Theme */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  
+  --card: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(15, 23, 42, 0.08);
+  --card-glow: rgba(59, 130, 246, 0.05);
+
+  --accent-cyan: #06b6d4;
+  --accent-blue: #3b82f6;
+  --accent-purple: #a855f7;
+
+  --cursor-dot: #0f172a;
+  --cursor-ring: rgba(15, 23, 42, 0.2);
 }
 
-@theme inline {
+/* Explicit class-based dark mode */
+html.dark, :root[class~="dark"] {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+
+  --card: rgba(15, 23, 42, 0.6);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-glow: rgba(6, 182, 212, 0.1);
+
+  --cursor-dot: #06b6d4;
+  --cursor-ring: rgba(6, 182, 212, 0.3);
+}
+
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-card-glow: var(--card-glow);
+
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-purple: var(--accent-purple);
+
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Global Reset & Base Styling */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* Navbar offset */
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Selection Theme */
+::selection {
+  background-color: rgba(6, 182, 212, 0.25);
+  color: inherit;
+}
+
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+  border: 2px solid var(--background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: var(--card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+}
+
+.glass-glow {
+  box-shadow: 0 0 40px var(--card-glow);
+}
+
+/* Custom Cursor Hide Rules for desktop */
+@media (pointer: fine) {
+  .custom-cursor-active, 
+  .custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+/* Text reveal masks */
+.text-reveal {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
